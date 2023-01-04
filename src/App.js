@@ -3,7 +3,7 @@ import Navbar from "./components/Navbar";
 import { Route, Routes } from "react-router-dom";
 import Home from "./pages/Home";
 import Login from "./pages/Login";
-import Register from "./pages/Register";
+import Signup from "./pages/Signup";
 import Fresh from "./pages/Fresh";
 import Rising from "./pages/Rising";
 
@@ -16,7 +16,7 @@ const App = () => {
         <Route path="rising" element={<Rising />} />
         <Route path="fresh" element={<Fresh />} />
         <Route path="login" element={<Login />} />
-        <Route path="register" element={<Register />} />
+        <Route path="signup" element={<Signup />} />
       </Routes>
     </>
   );

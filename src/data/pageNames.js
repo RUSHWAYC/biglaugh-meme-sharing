@@ -1,28 +1,28 @@
 const pageNames = [
   {
     id: 1,
-    name: "Front",
+    name: "front",
     url: "/",
   },
   {
     id: 2,
-    name: "Rising",
+    name: "rising",
     url: "rising",
   },
   {
     id: 3,
-    name: "Fresh",
+    name: "fresh",
     url: "fresh",
   },
   {
     id: 4,
-    name: "Login",
+    name: "login",
     url: "login",
   },
   {
     id: 5,
-    name: "Register",
-    url: "register",
+    name: "signup",
+    url: "signup",
   },
 ];
 

@@ -3,9 +3,10 @@ import { Link, NavLink } from "react-router-dom";
 import pageNames from "../data/pageNames";
 
 const Navbar = () => {
-  const activeStyle = "bg-stone-600 text-white px-3 py-2 text-lg font-medium";
+  const activeStyle =
+    "bg-stone-600 text-white px-3 py-2 text-lg font-medium capitalize";
   const inactiveStyle =
-    "text-gray-300 hover:bg-stone-400 hover:text-white px-3 py-2 text-lg font-small";
+    "text-gray-300 hover:bg-stone-400 hover:text-white px-3 py-2 text-lg font-small capitalize";
 
   return (
     <nav className="bg-stone-800">
@@ -35,11 +36,11 @@ const Navbar = () => {
           </div>
           <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
             <ul>
-              <button className="bg-gray-700 hover:bg-gray-500 text-white font-medium ml-5 py-1 px-2 rounded">
-                <Link to="login">LOGIN</Link>
+              <button className="bg-gray-700 hover:bg-gray-500 text-white font-medium ml-5 py-1 px-2 rounded uppercase">
+                <Link to="login">login</Link>
               </button>
-              <button className="bg-blue-500 hover:bg-blue-600 text-white font-medium ml-5 py-1 px-2 rounded">
-                <Link to="register">REGISTER</Link>
+              <button className="bg-blue-500 hover:bg-blue-600 text-white font-medium ml-5 py-1 px-2 rounded uppercase">
+                <Link to="signup">signup</Link>
               </button>
             </ul>
           </div>
