@@ -5,7 +5,7 @@ import { RiLockPasswordLine } from "react-icons/ri";
 
 import { client } from "../client";
 
-const Register = (props) => {
+const Register = () => {
   const [accountData, setAccountData] = useState({
     username: "",
     email: "",
@@ -59,7 +59,7 @@ const Register = (props) => {
               <input
                 required
                 type="email"
-                className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5"
+                className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5 invalid:text-pink-600 focus:invalid:border-pink-500 focus:invalid:ring-pink-500"
                 placeholder="Email"
                 name="email"
                 value={email}
