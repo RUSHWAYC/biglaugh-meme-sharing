@@ -1,10 +1,12 @@
-import React from "react";
+import { useEffect, useState } from "react";
 import { Link, NavLink, useNavigate } from "react-router-dom";
 import pageNames from "../data/pageNames";
 import { GoogleLogin } from "@react-oauth/google";
 import { FcGoogle } from "react-icons/fc";
-import { client } from "../client";
+import { client, urlFor } from "../client";
 import jwtDecode from "jwt-decode";
+import { fetchUser } from "../utils/fetchUser";
+import { userQuery } from "../utils/data";
 
 const Navbar = () => {
   const navigate = useNavigate();
@@ -20,8 +22,8 @@ const Navbar = () => {
       _id: sub,
       _type: "user",
       userName: name,
-      image: picture,
       email: email,
+      image: picture,
     };
 
     //Once logged create the user if they don't exist already.
@@ -29,6 +31,22 @@ const Navbar = () => {
       navigate("/", { replace: true });
     });
   };
+
+  const [user, setUser] = useState(null);
+
+  //Get user data and match it with Google sub.
+  useEffect(() => {
+    if (localStorage.getItem("user") != null) {
+      const userInfo = jwtDecode(fetchUser());
+      const query = userQuery(userInfo?.sub);
+      //Set the user that is logged in.
+      client.fetch(query).then((data) => {
+        setUser(data[0]);
+      });
+    }
+  }, []);
+
+  console.log(user?.image);
 
   const activeStyle =
     "bg-stone-600 text-white px-3 py-2 text-lg font-medium capitalize";
@@ -62,24 +80,38 @@ const Navbar = () => {
             </div>
           </div>
           <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
-            <div className="shadow-2xl">
-              <GoogleLogin
-                clientId={process.env.REACT_APP_GOOGLE_API_TOKEN}
-                render={(renderProps) => (
-                  <button
-                    type="button"
-                    className="bg-mainColor flex justify-center items-center p-3 rounded-lg cursor-pointer outline-none"
-                    onClick={renderProps.onClick}
-                    disabled={renderProps.disabled}
-                  >
-                    <FcGoogle className="mr-4" /> Sign in with google
-                  </button>
-                )}
-                onSuccess={responseGoogle}
-                onFailure={responseGoogle}
-                cookiePolicy="single_host_origin"
-              />
-            </div>
+            {localStorage.getItem("user") ? (
+              <div className="flex gap-5 md:gap-10">
+                {/** User profile image. */}
+                <Link to={`user-profile/${user?._id}`}>
+                  <img
+                    src={user?.image}
+                    referrerPolicy="no-referrer"
+                    alt="user-pic"
+                    className="w-28"
+                  />
+                </Link>
+              </div>
+            ) : (
+              <div className="shadow-2xl">
+                <GoogleLogin
+                  clientId={process.env.REACT_APP_GOOGLE_API_TOKEN}
+                  render={(renderProps) => (
+                    <button
+                      type="button"
+                      className="bg-mainColor flex justify-center items-center p-3 rounded-lg cursor-pointer outline-none"
+                      onClick={renderProps.onClick}
+                      disabled={renderProps.disabled}
+                    >
+                      <FcGoogle className="mr-4" /> Sign in with google
+                    </button>
+                  )}
+                  onSuccess={responseGoogle}
+                  onFailure={responseGoogle}
+                  cookiePolicy="single_host_origin"
+                />
+              </div>
+            )}
             {/** <ul>
               <button className="bg-gray-700 hover:bg-gray-500 text-white font-medium ml-5 py-1 px-2 rounded uppercase">
                 <Link to="login">login</Link>

@@ -1,5 +1,6 @@
 //Connecting Sanity backend with the front end.
 import sanityClient from "@sanity/client";
+import imageUrlBuilder from "@sanity/image-url";
 
 //Sanity data.
 export const client = sanityClient({
@@ -10,3 +11,7 @@ export const client = sanityClient({
   token: process.env.REACT_APP_SANITY_TOKEN,
   ignoreBrowserTokenWarning: true,
 });
+
+//Sanity image builder from image links.
+const builder = imageUrlBuilder(client);
+export const urlFor = (source) => builder.image(source);
