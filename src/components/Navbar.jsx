@@ -1,8 +1,35 @@
 import React from "react";
-import { Link, NavLink } from "react-router-dom";
+import { Link, NavLink, useNavigate } from "react-router-dom";
 import pageNames from "../data/pageNames";
+import { GoogleLogin } from "@react-oauth/google";
+import { FcGoogle } from "react-icons/fc";
+import { client } from "../client";
+import jwtDecode from "jwt-decode";
 
 const Navbar = () => {
+  const navigate = useNavigate();
+
+  //Get and save data from Google sign in.
+  const responseGoogle = (response) => {
+    console.log(jwtDecode(response.credential));
+    localStorage.setItem("user", JSON.stringify(response.credential));
+    const { name, sub, picture, email } = jwtDecode(response.credential);
+    //Export the data to Sanity. Connecting backend with front end.
+    const doc = {
+      //get the googleId for matching users in Sanity for useEffect on Home.jsx
+      _id: sub,
+      _type: "user",
+      userName: name,
+      image: picture,
+      email: email,
+    };
+
+    //Once logged create the user if they don't exist already.
+    client.createIfNotExists(doc).then(() => {
+      navigate("/", { replace: true });
+    });
+  };
+
   const activeStyle =
     "bg-stone-600 text-white px-3 py-2 text-lg font-medium capitalize";
   const inactiveStyle =
@@ -35,14 +62,32 @@ const Navbar = () => {
             </div>
           </div>
           <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
-            <ul>
+            <div className="shadow-2xl">
+              <GoogleLogin
+                clientId={process.env.REACT_APP_GOOGLE_API_TOKEN}
+                render={(renderProps) => (
+                  <button
+                    type="button"
+                    className="bg-mainColor flex justify-center items-center p-3 rounded-lg cursor-pointer outline-none"
+                    onClick={renderProps.onClick}
+                    disabled={renderProps.disabled}
+                  >
+                    <FcGoogle className="mr-4" /> Sign in with google
+                  </button>
+                )}
+                onSuccess={responseGoogle}
+                onFailure={responseGoogle}
+                cookiePolicy="single_host_origin"
+              />
+            </div>
+            {/** <ul>
               <button className="bg-gray-700 hover:bg-gray-500 text-white font-medium ml-5 py-1 px-2 rounded uppercase">
                 <Link to="login">login</Link>
               </button>
               <button className="bg-blue-500 hover:bg-blue-600 text-white font-medium ml-5 py-1 px-2 rounded uppercase">
                 <Link to="signup">signup</Link>
               </button>
-            </ul>
+            </ul> */}
           </div>
         </div>
       </div>

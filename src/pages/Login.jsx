@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import { AiOutlineMail } from "react-icons/ai";
 import { HiOutlineAtSymbol } from "react-icons/hi";
 import { RiLockPasswordLine } from "react-icons/ri";
 
