@@ -3,6 +3,7 @@ import { Link, NavLink, useNavigate } from "react-router-dom";
 import pageNames from "../data/pageNames";
 import { GoogleLogin } from "@react-oauth/google";
 import { FcGoogle } from "react-icons/fc";
+import { RxCaretDown } from "react-icons/rx";
 import { client, urlFor } from "../client";
 import jwtDecode from "jwt-decode";
 import { fetchUser } from "../utils/fetchUser";
@@ -10,6 +11,8 @@ import { userQuery } from "../utils/data";
 
 const Navbar = () => {
   const navigate = useNavigate();
+
+  const [isOpen, setIsOpen] = useState(false);
 
   //Get and save data from Google sign in.
   const responseGoogle = (response) => {
@@ -46,7 +49,7 @@ const Navbar = () => {
     }
   }, []);
 
-  console.log(user?.image);
+  console.log(user?.userName);
 
   const activeStyle =
     "bg-stone-600 text-white px-3 py-2 text-lg font-medium capitalize";
@@ -81,16 +84,57 @@ const Navbar = () => {
           </div>
           <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
             {localStorage.getItem("user") ? (
-              <div className="flex gap-5 md:gap-10">
+              <div className="relative flex flex-col items-center">
                 {/** User profile image. */}
-                <Link to={`user-profile/${user?._id}`}>
+                <button
+                  id="dropdownAvatarNameButton"
+                  data-dropdown-toggle="dropdownAvatarName"
+                  className="flex items-center justify-between p-4 text-sm font-medium rounded-ful hover:text-blue-500 md:mr-0 text-white"
+                  type="button"
+                  onClick={() => setIsOpen((prev) => !prev)}
+                >
+                  <span className="sr-only">Open user menu</span>
                   <img
+                    className="rounded-lg w-8 h-8 mr-2"
+                    alt="profile"
                     src={user?.image}
-                    referrerPolicy="no-referrer"
-                    alt="user-pic"
-                    className="w-28"
                   />
-                </Link>
+                  {user?.userName}
+                  <RxCaretDown />
+                </button>
+                {isOpen && (
+                  <div className="absolute top-14 divide-y rounded shadow w-44 bg-stone-400 divide-gray-600">
+                    <div className="px-4 py-3 text-sm text-white">
+                      <div className="truncate">{user.email}</div>
+                    </div>
+                    <ul className="py-1 text-sm text-gray-200">
+                      <li>
+                        <a
+                          href="#"
+                          className="block px-4 py-2 hover:bg-gray-500 hover:text-white"
+                        >
+                          Profile
+                        </a>
+                      </li>
+                      <li>
+                        <a
+                          href="#"
+                          className="block px-4 py-2 hover:bg-gray-500 hover:text-white"
+                        >
+                          Settings
+                        </a>
+                      </li>
+                    </ul>
+                    <div className="py-1">
+                      <a
+                        href="#"
+                        className="block px-4 py-2 text-sm hover:bg-gray-500 text-gray-200 hover:text-white"
+                      >
+                        Sign out
+                      </a>
+                    </div>
+                  </div>
+                )}
               </div>
             ) : (
               <div className="shadow-2xl">
