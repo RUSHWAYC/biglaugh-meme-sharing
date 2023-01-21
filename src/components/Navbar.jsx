@@ -1,22 +1,18 @@
-import { useEffect, useState } from "react";
+import React from "react";
 import { Link, NavLink, useNavigate } from "react-router-dom";
-import pageNames from "../data/pageNames";
+import jwtDecode from "jwt-decode";
 import { GoogleLogin } from "@react-oauth/google";
 import { FcGoogle } from "react-icons/fc";
-import { RxCaretDown } from "react-icons/rx";
-import { client, urlFor } from "../client";
-import jwtDecode from "jwt-decode";
-import { fetchUser } from "../utils/fetchUser";
-import { userQuery } from "../utils/data";
+
+import pageNames from "../data/pageNames";
+import { client } from "../client";
+import UserDropdown from "./UserDropdown";
 
 const Navbar = () => {
   const navigate = useNavigate();
 
-  const [isOpen, setIsOpen] = useState(false);
-
   //Get and save data from Google sign in.
   const responseGoogle = (response) => {
-    console.log(jwtDecode(response.credential));
     localStorage.setItem("user", JSON.stringify(response.credential));
     const { name, sub, picture, email } = jwtDecode(response.credential);
     //Export the data to Sanity. Connecting backend with front end.
@@ -34,22 +30,6 @@ const Navbar = () => {
       navigate("/", { replace: true });
     });
   };
-
-  const [user, setUser] = useState(null);
-
-  //Get user data and match it with Google sub.
-  useEffect(() => {
-    if (localStorage.getItem("user") != null) {
-      const userInfo = jwtDecode(fetchUser());
-      const query = userQuery(userInfo?.sub);
-      //Set the user that is logged in.
-      client.fetch(query).then((data) => {
-        setUser(data[0]);
-      });
-    }
-  }, []);
-
-  console.log(user?.userName);
 
   const activeStyle =
     "bg-stone-600 text-white px-3 py-2 text-lg font-medium capitalize";
@@ -84,58 +64,8 @@ const Navbar = () => {
           </div>
           <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
             {localStorage.getItem("user") ? (
-              <div className="relative flex flex-col items-center">
-                {/** User profile image. */}
-                <button
-                  id="dropdownAvatarNameButton"
-                  data-dropdown-toggle="dropdownAvatarName"
-                  className="flex items-center justify-between p-4 text-sm font-medium rounded-ful hover:text-blue-500 md:mr-0 text-white"
-                  type="button"
-                  onClick={() => setIsOpen((prev) => !prev)}
-                >
-                  <span className="sr-only">Open user menu</span>
-                  <img
-                    className="rounded-lg w-8 h-8 mr-2"
-                    alt="profile"
-                    src={user?.image}
-                  />
-                  {user?.userName}
-                  <RxCaretDown />
-                </button>
-                {isOpen && (
-                  <div className="absolute top-14 divide-y rounded shadow w-44 bg-stone-400 divide-gray-600">
-                    <div className="px-4 py-3 text-sm text-white">
-                      <div className="truncate">{user.email}</div>
-                    </div>
-                    <ul className="py-1 text-sm text-gray-200">
-                      <li>
-                        <a
-                          href="#"
-                          className="block px-4 py-2 hover:bg-gray-500 hover:text-white"
-                        >
-                          Profile
-                        </a>
-                      </li>
-                      <li>
-                        <a
-                          href="#"
-                          className="block px-4 py-2 hover:bg-gray-500 hover:text-white"
-                        >
-                          Settings
-                        </a>
-                      </li>
-                    </ul>
-                    <div className="py-1">
-                      <a
-                        href="#"
-                        className="block px-4 py-2 text-sm hover:bg-gray-500 text-gray-200 hover:text-white"
-                      >
-                        Sign out
-                      </a>
-                    </div>
-                  </div>
-                )}
-              </div>
+              //User image and settings dropdown.
+              <UserDropdown />
             ) : (
               <div className="shadow-2xl">
                 <GoogleLogin
@@ -156,14 +86,6 @@ const Navbar = () => {
                 />
               </div>
             )}
-            {/** <ul>
-              <button className="bg-gray-700 hover:bg-gray-500 text-white font-medium ml-5 py-1 px-2 rounded uppercase">
-                <Link to="login">login</Link>
-              </button>
-              <button className="bg-blue-500 hover:bg-blue-600 text-white font-medium ml-5 py-1 px-2 rounded uppercase">
-                <Link to="signup">signup</Link>
-              </button>
-            </ul> */}
           </div>
         </div>
       </div>
