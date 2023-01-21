@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import jwtDecode from "jwt-decode";
 import { RxCaretDown } from "react-icons/rx";
+import { useNavigate } from "react-router-dom";
 
 import { client } from "../client";
 import { fetchUser } from "../utils/fetchUser";
@@ -23,6 +24,13 @@ const UserDropdown = () => {
     }
   }, []);
 
+  const navigate = useNavigate();
+
+  const setLogOut = () => {
+    localStorage.clear();
+    navigate("/");
+  };
+
   return (
     <div className="relative flex flex-col items-center">
       <button
@@ -31,7 +39,7 @@ const UserDropdown = () => {
         className="flex items-center justify-between p-4 text-sm font-medium rounded-ful hover:text-blue-500 md:mr-0 text-white"
         type="button"
         onClick={() => setIsOpen((prev) => !prev)}
-        onBlur={() => setIsOpen((prev) => !prev)}
+        //onBlur={() => setIsOpen((prev) => !prev)}
       >
         <span className="sr-only">Open user menu</span>
         <img
@@ -49,29 +57,23 @@ const UserDropdown = () => {
           </div>
           <ul className="py-1 text-sm text-gray-200">
             <li>
-              <a
-                href="#"
-                className="block px-4 py-2 hover:bg-gray-500 hover:text-white"
-              >
+              <p className="block px-4 py-2 hover:bg-gray-500 hover:text-white">
                 Profile
-              </a>
+              </p>
             </li>
             <li>
-              <a
-                href="#"
-                className="block px-4 py-2 hover:bg-gray-500 hover:text-white"
-              >
+              <p className="block px-4 py-2 hover:bg-gray-500 hover:text-white">
                 Settings
-              </a>
+              </p>
             </li>
           </ul>
           <div className="py-1">
-            <a
-              href="#"
-              className="block px-4 py-2 text-sm hover:bg-gray-500 text-gray-200 hover:text-white"
+            <p
+              onClick={() => setLogOut()}
+              className="block px-4 py-2 text-sm hover:cursor-pointer hover:bg-gray-500 text-gray-200 hover:text-white"
             >
               Sign out
-            </a>
+            </p>
           </div>
         </div>
       )}
