@@ -1,28 +1,9 @@
 import { useState, useEffect } from "react";
-import jwtDecode from "jwt-decode";
 import { RxCaretDown } from "react-icons/rx";
 import { useNavigate } from "react-router-dom";
 
-import { client } from "../client";
-import { fetchUser } from "../utils/fetchUser";
-import { userQuery } from "../utils/data";
-
-const UserDropdown = () => {
+const UserDropdown = ({ user }) => {
   const [isOpen, setIsOpen] = useState(false);
-
-  const [user, setUser] = useState(null);
-
-  //Get user data and match it with Google sub.
-  useEffect(() => {
-    if (localStorage.getItem("user") != null) {
-      const userInfo = jwtDecode(fetchUser());
-      const query = userQuery(userInfo?.sub);
-      //Set the user that is logged in.
-      client.fetch(query).then((data) => {
-        setUser(data[0]);
-      });
-    }
-  }, []);
 
   const navigate = useNavigate();
 
