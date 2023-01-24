@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { RxCaretDown } from "react-icons/rx";
 import { useNavigate } from "react-router-dom";
 
