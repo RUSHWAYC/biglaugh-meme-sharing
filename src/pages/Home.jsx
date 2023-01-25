@@ -24,8 +24,9 @@ const Home = () => {
     }
   }, [pageName]);
 
+  console.log(posts);
   return (
-    <div>
+    <div className="relative">
       {posts?.map((post) => (
         <Post key={post._id} post={post} className="w-max" />
       ))}
