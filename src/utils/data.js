@@ -20,6 +20,7 @@ export const searchQuery = (searchTerm) => {
           image
       },
       likes,
+      title,
       comments[]{
         comment,
         _key,
@@ -47,6 +48,7 @@ export const feedQuery = `*[_type == 'post'] | order(_createdAt desc) {
       image
   },
   likes,
+  title,
   comments[]{
     comment,
     _key,
