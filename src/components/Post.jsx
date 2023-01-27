@@ -2,7 +2,6 @@ import React from "react";
 import { ImArrowUp, ImArrowDown } from "react-icons/im";
 
 const Post = ({ post: { postedBy, file, _id, title } }) => {
-  console.log(postedBy);
   return (
     //content-container
     <div className="w-full py-2 bg-stone-200">
@@ -24,7 +23,7 @@ const Post = ({ post: { postedBy, file, _id, title } }) => {
                 <img
                   className="rounded-lg"
                   style={{ width: "500px" }}
-                  alt="user-post"
+                  alt={title}
                   src={file.asset.url}
                 />
               </div>
@@ -37,7 +36,11 @@ const Post = ({ post: { postedBy, file, _id, title } }) => {
                 <p className="ml-auto self-center p-1.5 flex flex-row">
                   X ago by
                 </p>
-                <img src={postedBy.image} className="w-5 self-center" />
+                <img
+                  src={postedBy.image}
+                  className="w-5 self-center"
+                  alt={postedBy.userName}
+                />
                 <div className="self-center p-1.5">{postedBy.userName}</div>
               </div>
               {/**Post action. */}

@@ -1,6 +1,6 @@
 import React from "react";
 
-const Upload = () => {
+const Upload = ({ user }) => {
   return <div>This is the upload page.</div>;
 };
 

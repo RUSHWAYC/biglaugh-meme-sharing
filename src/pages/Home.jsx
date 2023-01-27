@@ -24,7 +24,6 @@ const Home = () => {
     }
   }, [pageName]);
 
-  console.log(posts);
   return (
     <div className="relative">
       {posts?.map((post) => (

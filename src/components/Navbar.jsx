@@ -1,32 +1,18 @@
-import { useState, useEffect } from "react";
+import { React } from "react";
 import { Link, NavLink, useNavigate } from "react-router-dom";
 import { IoMdSearch } from "react-icons/io";
 
 import pageNames from "../data/pageNames";
 import UserDropdown from "./UserDropdown";
 import LoginButton from "./LoginButton";
-import { fetchUser } from "../utils/fetchUser";
-import { userQuery } from "../utils/data";
-import { client } from "../client";
 
-const Navbar = ({ searchTerm, setSearchTerm }) => {
+const Navbar = ({ searchTerm, setSearchTerm, user }) => {
   const activeStyle =
     "bg-stone-600 text-white px-3 py-2 text-lg font-medium capitalize";
   const inactiveStyle =
     "text-gray-300 hover:bg-stone-400 hover:text-white px-3 py-2 text-lg font-small capitalize";
 
   const navigate = useNavigate();
-  const [user, setUser] = useState(null);
-
-  //Get user data and match it with Google sub.
-  useEffect(() => {
-    const userInfo = fetchUser();
-    const query = userQuery(userInfo?.sub);
-    //Set the user that is logged in.
-    client.fetch(query).then((data) => {
-      setUser(data[0]);
-    });
-  }, []);
 
   return (
     <nav className="bg-stone-800 sticky top-0 z-50">
@@ -70,6 +56,7 @@ const Navbar = ({ searchTerm, setSearchTerm }) => {
           <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
             {localStorage.getItem("user") ? (
               <>
+                {/**Upload button */}
                 <button className="bg-blue-500 hover:bg-blue-600 text-white font-medium ml-5 py-1 px-2 rounded uppercase">
                   <NavLink to="upload">upload</NavLink>
                 </button>
