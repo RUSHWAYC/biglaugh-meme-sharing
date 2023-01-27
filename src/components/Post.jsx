@@ -4,7 +4,7 @@ import { ImArrowUp, ImArrowDown } from "react-icons/im";
 const Post = ({ post: { postedBy, file, _id, title } }) => {
   return (
     //content-container
-    <div className="w-full py-2 bg-stone-200">
+    <div className="w-full py-2">
       {/**content */}
       <div className="mx-auto" style={{ minWidth: "860px", maxWidth: "1180" }}>
         {/**Content center. */}

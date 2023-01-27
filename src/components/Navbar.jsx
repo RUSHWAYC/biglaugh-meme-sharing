@@ -23,7 +23,7 @@ const Navbar = ({ searchTerm, setSearchTerm, user }) => {
               <Link to="/">BigLaugh</Link>
             </div>
             <div className="hidden sm:ml-6 sm:block">
-              <div className="flex space-x-4">
+              <div className="flex space-x-4 capitalize">
                 <ul>
                   {pageNames.slice(0, 3).map((page) => (
                     <NavLink

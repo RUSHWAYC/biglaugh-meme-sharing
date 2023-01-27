@@ -25,7 +25,7 @@ const Home = () => {
   }, [pageName]);
 
   return (
-    <div className="relative">
+    <div className="relative bg-stone-200">
       {posts?.map((post) => (
         <Post key={post._id} post={post} className="w-max" />
       ))}
