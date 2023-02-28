@@ -1,7 +1,10 @@
 import React from "react";
 import { ImArrowUp, ImArrowDown } from "react-icons/im";
+import { Link } from "react-router-dom";
+import moment from "moment";
 
-const Post = ({ post: { postedBy, file, _id, title } }) => {
+const Post = ({ post: { postedBy, file, _id, title, createdAt } }) => {
+  const timeago = moment(createdAt).fromNow();
   return (
     //content-container
     <div className="w-full py-2">
@@ -34,14 +37,18 @@ const Post = ({ post: { postedBy, file, _id, title } }) => {
                 <p className="self-center p-1.5">X points</p>
                 <p className="ml-2 self-center p-1.5">X comments</p>
                 <p className="ml-auto self-center p-1.5 flex flex-row">
-                  X ago by
+                  {timeago} by
                 </p>
-                <img
-                  src={postedBy.image}
-                  className="w-5 self-center"
-                  alt={postedBy.userName}
-                />
-                <div className="self-center p-1.5">{postedBy.userName}</div>
+                <Link to={`user/${postedBy?._id}`}>
+                  <div className="flex flex-row">
+                    <img
+                      src={postedBy.image}
+                      className="w-5 self-center"
+                      alt={postedBy.userName}
+                    />
+                    <div className="self-center p-1.5">{postedBy.userName}</div>
+                  </div>
+                </Link>
               </div>
               {/**Post action. */}
               <div>

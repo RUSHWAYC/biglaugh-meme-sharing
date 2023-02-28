@@ -43,5 +43,16 @@ export default {
       type: 'array',
       of: [{type: 'comment'}],
     },
+    {
+      name: 'createdAt',
+      title: 'Created At',
+      type: 'datetime',
+      options: {
+        dateFormat: 'YYYY-MM-DD',
+        timeFormat: 'HH:mm',
+        calendarTodayLabel: 'Today',
+      },
+      validation: (Rule) => Rule.required(),
+    },
   ],
 }

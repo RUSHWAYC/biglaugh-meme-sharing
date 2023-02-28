@@ -13,6 +13,8 @@ const Upload = ({ user }) => {
 
   const navigate = useNavigate();
 
+  const currentDate = new Date().toISOString();
+
   //Logic for uploading the file for preview.
   const uploadImage = (e) => {
     //selectedFile.type
@@ -63,6 +65,7 @@ const Upload = ({ user }) => {
           _type: "postedBy",
           _ref: user._id,
         },
+        createdAt: currentDate,
       };
       client.create(doc).then(() => {
         navigate("/");

@@ -7,8 +7,8 @@ export const userQuery = (userId) => {
 
 export const searchQuery = (searchTerm) => {
   //In Home.jsx load all serch terms and/or categories with all the info that come with it.
-  const query = `*[_type == 'post' && title match '${searchTerm}*' || category match '${searchTerm}*' || about match '${searchTerm}*']{
-      file {
+  const query = `*[_type == 'post' && title match '${searchTerm}*' || category match '${searchTerm}*' || about match '${searchTerm}*']{  
+    file {
           asset -> {
               url
           }
@@ -21,6 +21,7 @@ export const searchQuery = (searchTerm) => {
       },
       likes,
       title,
+      createdAt,
       comments[]{
         comment,
         _key,
@@ -49,6 +50,7 @@ export const feedQuery = `*[_type == 'post'] | order(_createdAt desc) {
   },
   likes,
   title,
+  createdAt,
   comments[]{
     comment,
     _key,
