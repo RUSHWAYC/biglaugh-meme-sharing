@@ -20,16 +20,19 @@ const Post = ({ post: { postedBy, file, _id, title, createdAt } }) => {
               style={{ width: "500" }}
             >
               {/**Title. */}
-              <div className="font-bold text-xl">{title}</div>
-              {/**Source */}
-              <div className="mb-1">
-                <img
-                  className="rounded-lg"
-                  style={{ width: "500px" }}
-                  alt={title}
-                  src={file.asset.url}
-                />
-              </div>
+              <Link to={`post/${_id}`}>
+                <div className="font-bold text-xl">{title}</div>
+
+                {/**Source */}
+                <div className="mb-1">
+                  <img
+                    className="rounded-lg"
+                    style={{ width: "500px" }}
+                    alt={title}
+                    src={file.asset.url}
+                  />
+                </div>
+              </Link>
               {/**Post info. */}
               <div className="w-full flex flex-row text-gray-400 mb-1 font-semibold text-sm">
                 <ImArrowUp className="border-solid border-2 rounded	border-gray-200 text-4xl p-0.5 w-14" />

@@ -61,3 +61,38 @@ export const feedQuery = `*[_type == 'post'] | order(_createdAt desc) {
   },
   }
 }`;
+
+export const postDataQuery = (postId) => {
+  const query = `*[_type == "post" && _id == '${postId}']{
+    file {
+      asset -> {
+          url
+      }
+  },
+    _id,
+    title,
+    createdAt,
+    postedBy->{
+      _id,
+      userName,
+      image
+    },
+   likes[]{
+      postedBy->{
+        _id,
+        userName,
+        image
+      },
+    },
+    comments[]{
+      comment,
+      _key,
+      postedBy->{
+        _id,
+        userName,
+        image
+      },
+    }
+  }`;
+  return query;
+};

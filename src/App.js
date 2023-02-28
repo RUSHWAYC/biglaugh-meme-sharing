@@ -9,6 +9,7 @@ import { fetchUser } from "./utils/fetchUser";
 import { userQuery } from "./utils/data";
 import { client } from "./client";
 import UserProfile from "./pages/UserProfile";
+import PostPage from "./pages/PostPage";
 
 const App = () => {
   const [searchTerm, setSearchTerm] = useState("");
@@ -36,6 +37,7 @@ const App = () => {
         <Route path="/:pageName" element={<Home />} />
         <Route path="upload" element={<Upload user={user} />} />
         <Route path="/user/:userId" element={<UserProfile />} />
+        <Route path="/post/:postId" element={<PostPage />} />
       </Routes>
     </GoogleOAuthProvider>
   );
