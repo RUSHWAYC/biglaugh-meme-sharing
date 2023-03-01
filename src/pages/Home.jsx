@@ -26,9 +26,16 @@ const Home = () => {
 
   return (
     <div className="relative bg-stone-200">
-      {posts?.map((post) => (
-        <Post key={post._id} post={post} className="w-max" />
-      ))}
+      <div className="flex flex-wrap">
+        <div className="w-full md:w-3/4 p-4 pr-0 md:pr-4">
+          {posts?.map((post) => (
+            <Post key={post._id} post={post} />
+          ))}
+        </div>
+        <div className="w-1/4 p-4 relative bg-white my-6 rounded">
+          <p>Sidebar</p>
+        </div>
+      </div>
     </div>
   );
 };

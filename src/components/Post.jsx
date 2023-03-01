@@ -9,7 +9,7 @@ const Post = ({ post: { postedBy, file, _id, title, createdAt } }) => {
     //content-container
     <div className="w-full py-2">
       {/**content */}
-      <div className="mx-auto" style={{ minWidth: "860px", maxWidth: "1180" }}>
+      <div className="mx-auto">
         {/**Content center. */}
         <div className="block" style={{ width: "540" }}>
           {/**Post container. */}
@@ -39,19 +39,21 @@ const Post = ({ post: { postedBy, file, _id, title, createdAt } }) => {
                 <ImArrowDown className="border-solid border-2 rounded	border-gray-200 text-4xl p-0.5 mx-2 w-14" />
                 <p className="self-center p-1.5">X points</p>
                 <p className="ml-2 self-center p-1.5">X comments</p>
-                <p className="ml-auto self-center p-1.5 flex flex-row">
-                  {timeago} by
+                <p className="ml-auto self-center flex flex-col">
+                  <span style={{ marginLeft: "auto" }}>{timeago} by</span>
+                  <Link className="ml-auto" to={`user/${postedBy?._id}`}>
+                    <div className="flex flex-row">
+                      <div className="self-center">
+                        {postedBy.userName}&nbsp;
+                      </div>
+                      <img
+                        src={postedBy.image}
+                        className="w-5 self-center"
+                        alt={postedBy.userName}
+                      />
+                    </div>
+                  </Link>
                 </p>
-                <Link to={`user/${postedBy?._id}`}>
-                  <div className="flex flex-row">
-                    <img
-                      src={postedBy.image}
-                      className="w-5 self-center"
-                      alt={postedBy.userName}
-                    />
-                    <div className="self-center p-1.5">{postedBy.userName}</div>
-                  </div>
-                </Link>
               </div>
               {/**Post action. */}
               <div>

@@ -27,7 +27,30 @@ const PostPage = () => {
 
   return (
     <div className="relative bg-stone-200">
-      {postData && <Post post={postData} />}
+      {postData && (
+        <div className="h-screen">
+          <div className="bg-white w-2/4">
+            <Post post={postData} />
+            <h2 className="text-2xl">Comments</h2>
+            {postData?.comments?.map((comment, i) => (
+              <div
+                key={i}
+                className="flex gap-2 mt-5 items-center bg-white rounded-lg"
+              >
+                <img
+                  src={comment.postedBy.image}
+                  alt="user-profile"
+                  className="w-10 h-10 rounded-full cursor-pointer"
+                />
+                <div className="flex flex-col">
+                  <p className="font-bold">{comment.postedBy.userName}</p>
+                  <p>{comment.comment}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
     </div>
   );
 };
